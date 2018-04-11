@@ -1,0 +1,13 @@
+.node {
+  stroke: black;
+  stroke-width: 2;
+  fill: white;
+}
+.link {
+  stroke: black;
+  stroke-width:2;
+  marker-end: url(#markerArrow);
+}
+.round-path {
+  fill: orange;
+}
