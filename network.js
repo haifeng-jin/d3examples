@@ -1,5 +1,4 @@
 var RoundPath = function(p1, p2, r) {
-  console.log(p1, p2);
   this.p1 = p1;
   this.p2 = p2;
   this.r = r;
@@ -29,12 +28,14 @@ RoundPath.prototype.draw = function(svg) {
     .attr("d", d);
 }
 
-var Network = function(x, y, n_node) {
+var Network = function(x, y, node_widths, name) {
   this.r = 15;
   this.arrow_len = 70;
-  this.n_node = n_node;
+  this.n_node = node_widths.length;
+  this.node_widths = node_widths;
   this.x = x;
   this.y = y;
+  this.name = name;
 }
 
 Network.prototype.node_center = function(node_id) {
@@ -42,35 +43,60 @@ Network.prototype.node_center = function(node_id) {
 }
 
 Network.prototype.draw = function(svg) {
-  for (var i = 0; i < this.n_node; i++) {
-    var p = this.node_center(i);
-    svg.append("circle")
+    var _this = this;
+    svg = svg.append("g").attr("id", name);
+    var svgs = svg.selectAll("g")
+      .data(this.node_widths)
+      .enter()
+      .append("g")
+
+    svgs.append("circle")
       .attr("class", "node")
-      .attr("cx", p.x)
-      .attr("cy", p.y)
+      .attr("cx", function(d, i) {
+        return _this.node_center(i).x;
+      })
+      .attr("cy", function(d, i) {
+        return _this.node_center(i).y;
+      })
+      // .attr("cy", p.y)
       .attr("r", this.r);
-  }
-  for (var i = 0; i < this.n_node - 1; i++) {
-    var p1 = this.node_center(i);
-    var p2 = this.node_center(i + 1);
-    svg.append("line")
+
+    svgs.append("text")
+      .attr("x", function(d, i) {
+        return _this.node_center(i).x;
+      })
+      .attr("y", function(d, i) {
+        return _this.node_center(i).y;
+      })
+      .text(function(d, i) { return _this.node_widths[i];});
+
+    svg.selectAll("g")
+      .data(this.node_widths.slice(0, -1))
+      .append("line")
       .attr("class", "link")
-      .attr("x1", p1.x)
-      .attr("x2", p2.x)
-      .attr("y1", p1.y + this.r)
-      .attr("y2", p2.y - this.r);
-  }
+      .attr("x1", function(d, i) {
+        return _this.node_center(i).x;
+      })
+      .attr("x2", function(d, i) {
+        return _this.node_center(i + 1).x;
+      })
+      .attr("y1", function(d, i) {
+        return _this.node_center(i).y + _this.r;
+      })
+      .attr("y2", function(d, i) {
+        return _this.node_center(i + 1).y - _this.r;
+      })
 }
 
-var network1 = new Network(20, 20, 4);
-var network2 = new Network(150, 20, 6);
+var network1 = new Network(20, 20, [10, 5, 8, 9], "network1");
+var network2 = new Network(150, 20, [11, 20, 6, 7, 8, 9], "network2");
 var node_matches = [[0, 0], [1, 2], [2, 4], [3, 5]];
+var svg = d3.select("#network")
 for (var i = 0; i < node_matches.length; i++) {
-  console.log(i);
   var path = new RoundPath(network1.node_center(node_matches[i][0]),
   network2.node_center(node_matches[i][1]),
   20);
-  path.draw(d3.select("#network"));
+  path.draw(svg);
 }
-network1.draw(d3.select("#network"));
-network2.draw(d3.select("#network"));
+network1.draw(svg);
+network2.draw(svg);

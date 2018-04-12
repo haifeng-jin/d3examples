@@ -9,5 +9,12 @@
   marker-end: url(#markerArrow);
 }
 .round-path {
-  fill: orange;
+  fill: lightblue;
+}
+text {
+font-size: 14px;
+text-anchor: middle;
+alignment-baseline: central;
+stroke: black;
+stroke-width:.01px;
 }
