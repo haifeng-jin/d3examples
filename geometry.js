@@ -20,6 +20,12 @@ Point.prototype.vectorRotate90 = function() {
   return new Point(-this.y, this.x);
 }
 
+Point.prototype.vectorRotate = function(beta) {
+  var cos = Math.cos(beta);
+  var sin = Math.sin(beta);
+  return new Point(cos * this.x - sin * this.y, sin * this.x + cos * this.y);
+}
+
 Point.prototype.length = function() {
   return Math.sqrt(this.x * this.x + this.y * this.y);
 }

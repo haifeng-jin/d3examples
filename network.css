@@ -4,15 +4,23 @@
   fill: white;
 }
 .link {
-  stroke: black;
+  /* stroke: black; */
   stroke-width:2;
-  marker-end: url(#markerArrow);
+  /* marker-end: url(#markerArrow); */
+  fill: none;
 }
 .round-path {
   fill: lightblue;
 }
 text {
 font-size: 14px;
+text-anchor: middle;
+alignment-baseline: central;
+stroke: black;
+stroke-width:.01px;
+}
+#network-skip text {
+font-size: 0px;
 text-anchor: middle;
 alignment-baseline: central;
 stroke: black;
