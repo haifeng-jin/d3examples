@@ -54,15 +54,22 @@ var Network = function(x, y, node_widths, name) {
   this.y = y;
   this.name = name;
   this.skip_connections = [];
+  this.y_offset = 60;
+  this.x_offset = 8;
 }
 
 Network.prototype.node_center = function(node_id) {
-  return new Point(this.x, this.y + node_id * this.arrow_len);
+  return new Point(this.x, this.y + node_id * this.arrow_len + this.y_offset);
 }
 
 Network.prototype.draw = function(svg) {
     var _this = this;
     svg = svg.append("g").attr("id", name);
+      // <foreignObject>\(\displaystyle{x+1\over y-1}\)</foreignObject>
+    svg.append("foreignObject")
+      .attr("x", this.x - this.x_offset)
+      .attr("y", this.y)
+      .text("\\(\\displaystyle " + this.name + "\\)");
     var svgs = svg.selectAll("g")
       .data(this.node_widths)
       .enter()
@@ -137,29 +144,3 @@ Network.prototype.draw = function(svg) {
 Network.prototype.skip = function(n1, n2, color) {
   this.skip_connections.push([n1, n2, color]);
 }
-
-var network1 = new Network(20, 20, [10, 5, 8], "network1");
-var network2 = new Network(150, 20, [11, 20, 6, 7], "network2");
-var node_matches = [[0, 0], [1, 2], [2, 3]];
-var svg = d3.select("#network")
-for (var i = 0; i < node_matches.length; i++) {
-  var path = new RoundPath(network1.node_center(node_matches[i][0]),
-  network2.node_center(node_matches[i][1]),
-  20);
-  path.draw(svg);
-}
-network1.draw(svg);
-network2.draw(svg);
-
-
-svg = d3.select("#network-skip")
-marker(svg, "green");
-marker(svg, "orange");
-var network1 = new Network(20, 20, [10, 5, 8, 9], "network1");
-var network2 = new Network(150, 20, [11, 20, 6, 7, 8], "network2");
-network1.skip(0, 2, "green");
-network1.skip(1, 3, "orange");
-network1.draw(svg);
-network2.skip(0, 2, "green");
-network2.skip(1, 4, "orange");
-network2.draw(svg);
