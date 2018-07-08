@@ -66,10 +66,11 @@ Network.prototype.draw = function(svg) {
     var _this = this;
     svg = svg.append("g").attr("id", name);
       // <foreignObject>\(\displaystyle{x+1\over y-1}\)</foreignObject>
-    svg.append("foreignObject")
-      .attr("x", this.x - this.x_offset)
-      .attr("y", this.y)
-      .text("\\(\\displaystyle " + this.name + "\\)");
+    // svg.append("foreignObject")
+    //   .attr("x", this.x - this.x_offset)
+    //   .attr("y", this.y)
+    //   .text(this.name);
+      // .text("\\(\\displaystyle " + this.name + "\\)");
     var svgs = svg.selectAll("g")
       .data(this.node_widths)
       .enter()
@@ -121,7 +122,6 @@ Network.prototype.draw = function(svg) {
       .append("path")
       .attr("class", "link")
       .attr("d", function (d) {
-        console.log(d);
         var p1 = _this.node_center(d[0]);
         var p2 = _this.node_center(d[1]);
         var distance = p2.subtract(p1).length();

@@ -1,32 +1,51 @@
-.node {
+#tree .node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 3px;
+}
+
+#tree .node text {
+  font: 12px sans-serif;
+  text-anchor: middle;
+  alignment-baseline: central;
+}
+
+#tree .link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2px;
+}
+
+#network .node {
   stroke: black;
   stroke-width: 2;
   fill: white;
 }
-.link {
+#network .link {
   /* stroke: black; */
   stroke-width:2;
+  stroke: black;
   /* marker-end: url(#markerArrow); */
   fill: none;
 }
-.arrow {
+#network .arrow {
   stroke: black;
   stroke-width:2;
   /* marker-end: url(#markerArrow); */
   fill: none;
   stroke-dasharray: 5,5;
 }
-.arrow-text {
+#network .arrow-text {
   font-size: 18px;
   text-anchor: middle;
 }
-.round-path {
+#network .round-path {
   fill: lightblue;
 }
-foreignObject {
+#network foreignObject {
   font-size: 24px;
 }
-text {
+#network text {
 font-size: 14px;
 text-anchor: middle;
 alignment-baseline: central;
