@@ -20,10 +20,11 @@ Tree.prototype.draw = function(svg) {
 
 // Collapse the node and all it's children
 function collapse(d) {
+  return;
   if(d.children) {
-    d._children = d.children
-    d._children.forEach(collapse)
-    d.children = null
+    d._children = d.children;
+    d._children.forEach(collapse);
+    d.children = null;
   }
 }
 
@@ -33,9 +34,9 @@ function diagonal(s, d) {
   path = `M ${s.y} ${s.x}
           C ${(s.y + d.y) / 2} ${s.x},
             ${(s.y + d.y) / 2} ${d.x},
-            ${d.y} ${d.x}`
+            ${d.y} ${d.x}`;
 
-  return path
+  return path;
 }
 
 Tree.prototype.update = function(source) {

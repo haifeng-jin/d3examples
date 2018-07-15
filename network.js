@@ -79,20 +79,20 @@ Network.prototype.draw = function(svg) {
     svg.append("defs");
     svgs.append("circle")
       .attr("class", "node")
-      .attr("cx", function(d, i) {
+      .attr("cy", function(d, i) {
         return _this.node_center(i).x;
       })
-      .attr("cy", function(d, i) {
+      .attr("cx", function(d, i) {
         return _this.node_center(i).y;
       })
       // .attr("cy", p.y)
       .attr("r", this.r);
 
     svgs.append("text")
-      .attr("x", function(d, i) {
+      .attr("y", function(d, i) {
         return _this.node_center(i).x;
       })
-      .attr("y", function(d, i) {
+      .attr("x", function(d, i) {
         return _this.node_center(i).y;
       })
       .text(function(d, i) { return _this.node_widths[i];});
@@ -102,16 +102,16 @@ Network.prototype.draw = function(svg) {
       .append("line")
       .attr("class", "link")
       .style("stroke", "black")
-      .attr("x1", function(d, i) {
+      .attr("y1", function(d, i) {
         return _this.node_center(i).x;
       })
-      .attr("x2", function(d, i) {
+      .attr("y2", function(d, i) {
         return _this.node_center(i + 1).x;
       })
-      .attr("y1", function(d, i) {
+      .attr("x1", function(d, i) {
         return _this.node_center(i).y + _this.r;
       })
-      .attr("y2", function(d, i) {
+      .attr("x2", function(d, i) {
         return _this.node_center(i + 1).y - _this.r;
       })
       .style("marker-end", "url(#black)");
@@ -129,8 +129,8 @@ Network.prototype.draw = function(svg) {
         var v = p2.subtract(p1).vectorUnit().multiply(_this.r);
         p1 = p1.subtract(v.vectorRotate(- Math.PI - Math.PI / 6.0));
         p2 = p2.subtract(v.vectorRotate(Math.PI / 6.0));
-        d = "M " + p1.x + " " + p1.y + " ";
-        d += "A " + r + " " + r + " 0 0 1 " + p2.x + " " + p2.y + " ";
+        d = "M " + p1.y + " " + p1.x + " ";
+        d += "A " + r + " " + r + " 0 0 0 " + p2.y + " " + p2.x + " ";
         return d;
       })
       .attr("stroke", function (d) {
